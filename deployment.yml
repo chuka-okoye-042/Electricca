@@ -1,0 +1,31 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-app-electricca
+spec:
+  replicas: 4  # Number of pods to run
+  selector:
+    matchLabels:
+      app: django-electricca
+  template:
+    metadata:
+      labels:
+        app: django-electricca
+    spec:
+      containers:
+      - name: django-electricca-container
+        image: chuka042/electricca:latest  # Replace with your built image
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - mountPath: /code
+          name: code-volume
+        env:
+        - name: DEBUG
+          value: "True"
+      volumes:
+      - name: code-volume
+        hostPath:
+          path: /mnt/c/Users/chuka/OneDrive/Desktop/chuks_python/myproject
+                
